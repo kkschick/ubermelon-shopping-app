@@ -30,9 +30,9 @@ Because the controller is the piece that ties all of the components together, it
 
 Remember, each file has a specific responsibility, so even though you have more than one file open, it is straightforward enough to decide which file to be in.
 
-Taking Stock
-------------
-Your first task is to explore the app from within your browser. For each page, try to identify the following (and write it down somewhere)
+Task 1: Taking Stock
+--------------------
+Your first task is to explore the app from within your browser. The goal is to understand how the app is laid out. For each page, try to identify the following (and write it down somewhere)
 
 1. The controller function attached to each page
 2. The model function calls (if any) for a given page
@@ -63,29 +63,24 @@ If you try to access the html templates directly in your browser, ie: navigate o
 
 However, you can access [http://localhost:5000/static/img/ubermelonsmall.png](http://localhost:5000/static/img/ubermelonsmall.png) without any issue. This is because the ubermelon logo resides in a special directory called `static`. Files that go in this directory are available to the browser without any preprocessing. This makes sense for files like images or stylesheets that don't change: static files.
 
-Template Children/Fruitstrap
------------------
+### Styling
+Most of the style work in our app was not written manually. Instead, we used [bootstrap](http://getbootstrap.com/getting-started/#examples), a css framework. The bootstrap framework specifies 'components', higher level UI components composed of more basic HTML tags. Notably, we use the `navbar` component and the `well` component.
 
-The login page is unstyled, but the big 'melon list' and 'melon details' page have styles, even though they're not explicit. Explore the 'base.html' file and see how it relates to 'view source'. Use template inheritance to add style to the login page. 
+[Bootstrap component list](http://getbootstrap.com/components/)
 
-http://flask.pocoo.org/docs/patterns/templateinheritance/
+Task 2: The Login Page
+----------------------
+If you click on the 'Log In' link in the nav bar at the top of the screen, you'll see that it does nothing. However, if you peruse the list of routes available in your `melons.py` file, you will find that there is a login route that is inaccessible by clicking. You can, however, browse on over to the URL directly in your browser.
 
-Template Parents
-----------------
-The login page isn't wired up to the 'log in' image is defined. Find out where that link is created and where it's pointing to. Update it to point to the login page from the above section. Notice how in every page that has the header, they now all go to the correct place.
+###Fixing this bug
+1. Wire up the link to go to the page. Your first task is to locate the `<a href>` tag that is used in the black bar at the top of the page. This section of the page is typically called the navbar. It may be tricky at first to find where in the code this tag exists. Remember to use the browser's element inspector to see exactly what lines of HTML you're looking for. Also remember that this part of the page is shared across multiple pages.
+2. Style the page. When you _do_ have the login page 'wired up', you'll notice that it's styled pretty terribly. We want it to use the same style as all the other pages. We could try to add bootstrap to the HTML directly, but it is easier to make this page a child of our `base.html` template. Check either `melon_details.html` or `all_melons.html` for an example on how to do that.
 
-Static
-------
-The watermelon.png file isn't displaying in the main template. Fix its URL to display correctly. Try to find the watermelon.png file.
+Task 3: The Melon Cart Icon
+---------------------------
+The melon cart link at the top of the page has a broken image. If you browse around our directory tree, you'll find that the file exists, but isn't linked properly.
 
-CSS
----
-Find where all the styles are defined. Find out where that stylesheet is linked. Add a height of 15px to the watermelon.png.
+###Fixing this bug
+1. First, fix the link. Make sure you understand why it's not displaying in the first place.
+2. Style this component. Find the stylesheet that's being used and fiddle with the style to make it display correctly. A height of 15px on this image should do it. Try to figure out a CSS selector that targets just that image without affecting others. Here's a [css selector guide](https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Getting_started/Selectors) if you need help.
 
-Directories
------------
-For funsies, create a file called "myfile.html" in the root of your project directory. Try to go to it in your browser. Discuss.
-
-Sessions
---------
-UGH
