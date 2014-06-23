@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block body %}
+<h2>{{ display_melon.common_name }}</h2>
+<img class="product-img" src="{{display_melon.imgurl}}">
+<div class="cart well">
+    <h3>Price per melon</h3>
+    <p> {{ display_melon.price_str() }} </p>
+    <a class="btn btn-primary" href="/add_to_cart/{{display_melon.id}}">Add to Cart</a>
+</div>
+<div class="melon-details">
+    <h3>Product details</h3>
+    <ul>
+        <li>Melon type: {{ display_melon.melon_type }}</li>
+        <li>Flesh color: {{ display_melon.flesh_color }}</li>
+        <li>Rind color: {{ display_melon.rind_color }}</li>
+        {% if display_melon.seedless %}
+        <li>Seedless melon</li>
+        {% else %}
+        <li class='warning'>Warning! This melon has seeds</li>
+        {% endif %}
+    </ul>
+</div>
+{% endblock %}

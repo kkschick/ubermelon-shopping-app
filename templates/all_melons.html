@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block body %}
+<h2>Top Selling Melons</h2>
+
+<div id="melon-list">
+    {% for melon in melon_list %}
+    <div class="melon-summary well">
+        <h2><a href="/melon/{{melon.id}}">{{melon.common_name}}</a></h2>
+        <a href="/melon/{{melon.id}}">
+        <img src="{{melon.imgurl}}">
+        </a>
+        <h3>{{melon.price_str()}}</h3>
+        <a class="btn btn-primary" href="/melon/{{melon.id}}">Details</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
