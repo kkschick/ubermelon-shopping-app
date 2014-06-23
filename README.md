@@ -63,6 +63,11 @@ If you try to access the html templates directly in your browser, ie: navigate o
 
 However, you can access [http://localhost:5000/static/img/ubermelonsmall.png](http://localhost:5000/static/img/ubermelonsmall.png) without any issue. This is because the ubermelon logo resides in a special directory called `static`. Files that go in this directory are available to the browser without any preprocessing. This makes sense for files like images or stylesheets that don't change: static files.
 
+### The Checkout Button
+Checking out our shopping cart is outside the scope of our task, but it is worth noting the 'message flash' mechanism that is used when you try to check out. It is a way to display one-time messages to the user. This is a great place to place error, warning, or success messages. Flashed messages only display once, if you reload the page, you will see that it disappears on the second view.
+
+[Flask Message Flashing documentation](http://flask.pocoo.org/docs/patterns/flashing/)
+
 ### Styling
 Most of the style work in our app was not written manually. Instead, we used [bootstrap](http://getbootstrap.com/getting-started/#examples), a css framework. The bootstrap framework specifies 'components', higher level UI components composed of more basic HTML tags. Notably, we use the `navbar` component and the `well` component.
 
@@ -73,14 +78,28 @@ Task 2: The Login Page
 If you click on the 'Log In' link in the nav bar at the top of the screen, you'll see that it does nothing. However, if you peruse the list of routes available in your `melons.py` file, you will find that there is a login route that is inaccessible by clicking. You can, however, browse on over to the URL directly in your browser.
 
 ###Fixing this bug
-1. Wire up the link to go to the page. Your first task is to locate the `<a href>` tag that is used in the black bar at the top of the page. This section of the page is typically called the navbar. It may be tricky at first to find where in the code this tag exists. Remember to use the browser's element inspector to see exactly what lines of HTML you're looking for. Also remember that this part of the page is shared across multiple pages.
-2. Style the page. When you _do_ have the login page 'wired up', you'll notice that it's styled pretty terribly. We want it to use the same style as all the other pages. We could try to add bootstrap to the HTML directly, but it is easier to make this page a child of our `base.html` template. Check either `melon_details.html` or `all_melons.html` for an example on how to do that.
+1.  Wire up the link to go to the page. 
+    Your first task is to locate the `<a href>` tag that is used in the black bar at the top of the page. This section of the page is typically called the navbar. It may be tricky at first to find where in the code this tag exists. Remember to use the browser's element inspector to see exactly what lines of HTML you're looking for. Also remember that this part of the page is shared across multiple pages.
+
+2.  Style the page. 
+    When you _do_ have the login page 'wired up', you'll notice that it's styled pretty terribly. We want it to use the same style as all the other pages. We could try to add bootstrap to the HTML directly, but it is easier to make this page a child of our `base.html` template. Check either `melon_details.html` or `all_melons.html` for an example on how to do that.
 
 Task 3: The Melon Cart Icon
 ---------------------------
 The melon cart link at the top of the page has a broken image. If you browse around our directory tree, you'll find that the file exists, but isn't linked properly.
 
 ###Fixing this bug
-1. First, fix the link. Make sure you understand why it's not displaying in the first place.
-2. Style this component. Find the stylesheet that's being used and fiddle with the style to make it display correctly. A height of 15px on this image should do it. Try to figure out a CSS selector that targets just that image without affecting others. Here's a [css selector guide](https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Getting_started/Selectors) if you need help.
+1.  First, fix the link. 
+    Make sure you understand why it's not displaying in the first place.
 
+2.  Style this component. 
+    Find the stylesheet that's being used and fiddle with the style to make it display correctly. A height of 15px on this image should do it. Try to figure out a CSS selector that targets just that image without affecting others. Here's a [css selector guide](https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Getting_started/Selectors) if you need help.
+
+Task 4: The Melon Cart Functionality
+------------------------------------
+When you view
+
+###Implementing this feature
+This feature is two-part. The order in which you build the feature doesn't matter, but it may be helpful to write both in conjunction.
+1.  Add things to the cart. 
+    When you click the `add to cart` button, the fact that a melon has been added to a cart needs to be recorded somewhere. This isn't long-term information, nor is it information that's attached to any particular user. It's short-term information that's attached to the browser you're currently using. This kind of information is best stored in the [session](http://flask.pocoo.org/docs/quickstart/#sessions). On adding things 
