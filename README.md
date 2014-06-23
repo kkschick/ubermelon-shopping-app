@@ -118,17 +118,18 @@ This feature is two-part. The order in which you build the feature doesn't matte
 
     1. On adding an item, check to see if the session contains a cart already
     2. If not, add a new cart (empty) list to the session
-    3. Append the melon under consideration to our cart list
+    3. Append the melon id under consideration to our cart list
     4. Flash a message indicating the melon was successfully added to the cart
     5. Redirect the user to the shopping cart page
 
 2.  Display the cart contents.
     
     Displaying the contents of the cart is a little simpler, but is an exercise in fiddling with Jinja templates and HTML tags. Essentially, in our shopping cart page, we will loop through all the melons in our cart and display them in a table.
-    1. In our cart controller, get a list of melons in the cart out of the session (if it exists)
-    2. Pass the list of melons on to the shopping cart template
-    3. In the shopping cart template, delete the placeholder rows
-    4. Use a jinja for loop to loop through the melon list, outputting each melon to the table in place of the original placeholders.
+    1. In our cart controller, get a list of melon ids in the cart out of the session (if it exists)
+    2. Query the database for all melons that match the ids in the list
+    3. Pass the list of melons on to the shopping cart template
+    4. In the shopping cart template, delete the placeholder rows
+    5. Use a jinja for loop to iterate through the melon list, outputting each melon to the table in place of the original placeholders.
 
 With each part of the feature being reasonably complex, it makes sense to do them in stages. For example, you might go through this sequence instead:
 
