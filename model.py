@@ -18,6 +18,9 @@ class Melon(object):
     def __repr__(self):
         return "<Melon: %s, %s, %s>"%(self.id, self.common_name, self.price_str())
 
+class Customer(object):
+    pass
+
 def connect():
     conn = sqlite3.connect("melons.db")
     cursor = conn.cursor()
@@ -68,3 +71,6 @@ def get_melon_by_id(id):
                   row[6], row[7])
     
     return melon
+
+def get_customer_by_email(email):
+    pass

@@ -139,3 +139,15 @@ With each part of the feature being reasonably complex, it makes sense to do the
 5. In the `add_to_cart` controller, replace the single melon with a melon list...
 
 And so on.
+
+Extra Credit: Log In
+--------------------
+We'll implement a very simple login feature (that doesn't do anything) using all the same mechanisms we've seen until now. Exactly 'which user is logged in right now' is a good candidate for being stored in the session, as it's very browser-specific information. The general procedure is as follows
+
+1. When the user submits the login form, the email address and password get sent to the `process_login` controller.
+2. From the `process_login` controller, we can extract the form fields from the [request object](http://flask.pocoo.org/docs/quickstart/#the-request-object).
+3. We can use the submitted email to look up whether or not that user exists in the database (fill in the details of the `Customer` class and the `get_customer_by_email` function).
+4. If the customer exists, store the customer in the session. For this exercise, we will ignore whether or not the password matches.
+5. In our templates, if a customer is logged in (ie: they exist in the session), display their name and an option to log out instead of the login link.
+6. Flash a login successful message.
+7. Redirect the user to the main melon listings.
