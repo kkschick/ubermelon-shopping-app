@@ -101,10 +101,41 @@ The melon cart link at the top of the page has a broken image. If you browse aro
 
 Task 4: The Melon Cart Functionality
 ------------------------------------
-When you view
+When you view the shopping cart, you'll notice that all the items in it are placeholder dummy items. We'll need to replace these items with actual melons. In addition, the 'Add to Cart' button on the melon detail page is wired up but the controller currently' doesn't do anything.
+
+We need a way to temporarily hold information that the user generates (ie: which melons are in the cart). We could commit this to the database, but it would be cumbersome. Instead, we'll use a storage mechanism called 'the session' to carry information from clicking the 'Add to Cart' button all the way to the shopping cart page.
+
+[Session documentation](http://flask.pocoo.org/docs/quickstart/#sessions)
 
 ###Implementing this feature
 This feature is two-part. The order in which you build the feature doesn't matter, but it may be helpful to write both in conjunction.
+
 1.  Add things to the cart. 
 
-    When you click the `add to cart` button, the fact that a melon has been added to a cart needs to be recorded somewhere. This isn't long-term information, nor is it information that's attached to any particular user. It's short-term information that's attached to the browser you're currently using. This kind of information is best stored in the [session](http://flask.pocoo.org/docs/quickstart/#sessions). On adding things 
+    When you click the `add to cart` button, the fact that a melon has been added to a cart needs to be recorded somewhere. This isn't long-term information, nor is it information that's attached to any particular user. It's short-term information that's attached to the browser you're currently using. This kind of information is best stored in the session.
+
+    For now, we can use a list as our 'cart' and just put our Melon objects inside it to represent the idea of them being added. Breaking down the process, here are the steps you should go through:
+
+    1. On adding an item, check to see if the session contains a cart already
+    2. If not, add a new cart (empty) list to the session
+    3. Append the melon under consideration to our cart list
+    4. Flash a message indicating the melon was successfully added to the cart
+    5. Redirect the user to the shopping cart page
+
+2.  Display the cart contents.
+    
+    Displaying the contents of the cart is a little simpler, but is an exercise in fiddling with Jinja templates and HTML tags. Essentially, in our shopping cart page, we will loop through all the melons in our cart and display them in a table.
+    1. In our cart controller, get a list of melons in the cart out of the session (if it exists)
+    2. Pass the list of melons on to the shopping cart template
+    3. In the shopping cart template, delete the placeholder rows
+    4. Use a jinja for loop to loop through the melon list, outputting each melon to the table in place of the original placeholders.
+
+With each part of the feature being reasonably complex, it makes sense to do them in stages. For example, you might go through this sequence instead:
+
+1. On adding an item, add some arbitrary string to the session
+2. In the shopping cart page, add some code to display the string from the session.
+3. Going back to the `add_to_cart` controller, replace the string with the actual melon object
+4. Going back to the shopping cart page, rewrite the page to display the single melon object
+5. In the `add_to_cart` controller, replace the single melon with a melon list...
+
+And so on.
