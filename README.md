@@ -79,9 +79,11 @@ If you click on the 'Log In' link in the nav bar at the top of the screen, you'l
 
 ###Fixing this bug
 1.  Wire up the link to go to the page. 
+
     Your first task is to locate the `<a href>` tag that is used in the black bar at the top of the page. This section of the page is typically called the navbar. It may be tricky at first to find where in the code this tag exists. Remember to use the browser's element inspector to see exactly what lines of HTML you're looking for. Also remember that this part of the page is shared across multiple pages.
 
 2.  Style the page. 
+
     When you _do_ have the login page 'wired up', you'll notice that it's styled pretty terribly. We want it to use the same style as all the other pages. We could try to add bootstrap to the HTML directly, but it is easier to make this page a child of our `base.html` template. Check either `melon_details.html` or `all_melons.html` for an example on how to do that.
 
 Task 3: The Melon Cart Icon
@@ -90,9 +92,11 @@ The melon cart link at the top of the page has a broken image. If you browse aro
 
 ###Fixing this bug
 1.  First, fix the link. 
+
     Make sure you understand why it's not displaying in the first place.
 
 2.  Style this component. 
+
     Find the stylesheet that's being used and fiddle with the style to make it display correctly. A height of 15px on this image should do it. Try to figure out a CSS selector that targets just that image without affecting others. Here's a [css selector guide](https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Getting_started/Selectors) if you need help.
 
 Task 4: The Melon Cart Functionality
@@ -102,4 +106,5 @@ When you view
 ###Implementing this feature
 This feature is two-part. The order in which you build the feature doesn't matter, but it may be helpful to write both in conjunction.
 1.  Add things to the cart. 
+
     When you click the `add to cart` button, the fact that a melon has been added to a cart needs to be recorded somewhere. This isn't long-term information, nor is it information that's attached to any particular user. It's short-term information that's attached to the browser you're currently using. This kind of information is best stored in the [session](http://flask.pocoo.org/docs/quickstart/#sessions). On adding things 
