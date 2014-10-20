@@ -36,8 +36,10 @@ def shopping_cart():
     items = session["cart"]
     dict_of_melons = {}
 
+    total_price = 0
     for item in items:
         melon = model.get_melon_by_id(item)
+        total_price += melon.price
         if melon.id in dict_of_melons:
             dict_of_melons[melon.id][0] += 1
         else:
@@ -46,7 +48,7 @@ def shopping_cart():
     print dict_of_melons
 
     
-    return render_template("cart.html", display_cart = dict_of_melons)      
+    return render_template("cart.html", display_cart = dict_of_melons, total = total_price)      
 
 
 @app.route("/add_to_cart/<int:id>")

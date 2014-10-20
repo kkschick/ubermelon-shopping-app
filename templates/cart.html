@@ -4,11 +4,11 @@
     <tr><th>Melon Name</th><th>Quantity</th><th>Price</th><th>Total</th></tr>
 
     {% for key, value in display_cart.iteritems() %}
-    <tr><td>{{value[1]}}</td><td>{{value[0]}}</td><td>${{value[2]}}</td><td>${{value[0] * value[2]}}</td></tr>
+    <tr><td>{{value[1]}}</td><td>{{value[0]}}</td><td>${{ "%.2f" % value[2]}}</td><td>${{ "%.2f" % (value[0] * value[2])}}</td></tr>
     {% endfor %}
 
 </table>
-<h3>Total: {{ display_cart|sum() }} </h3>
+<h3>Total: ${{ "%.2f" % total }} </h3>
 
 <a href="/checkout" class="btn btn-large btn-primary">Check Out</a>
 {% endblock %}
