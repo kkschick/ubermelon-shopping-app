@@ -19,7 +19,15 @@ class Melon(object):
         return "<Melon: %s, %s, %s>"%(self.id, self.common_name, self.price_str())
 
 class Customer(object):
-    pass
+    def __init__(self, id, email, givenname, surname, password, telephone, tos_agree, gender, dob, billto_address1, billto_address2, billto_city, billto_state, billto_postalcode, shipto_address1, shipto_address2, shipto_city, shipto_state, shipto_postalcode, region):
+      self.id = id
+      self.email = email
+      self.givenname = givenname
+      self.surname = surname
+      self.password = password
+
+    def __repr__(self):
+      return self.email
 
 def connect():
     conn = sqlite3.connect("melons.db")
@@ -47,8 +55,6 @@ def get_melons():
 
         melons.append(melon)
 
-    print melons
-
     return melons
 
 def get_melon_by_id(id):
@@ -73,4 +79,20 @@ def get_melon_by_id(id):
     return melon
 
 def get_customer_by_email(email):
-    pass
+    """Query for a specific customer in the database by the email"""
+    cursor = connect()
+    query = """SELECT id, email, givenname, surname, password, telephone, tos_agree, gender, dob, billto_address1, billto_address2, billto_city, billto_state, billto_postalcode, shipto_address1, shipto_address2, shipto_city, shipto_state, shipto_postalcode, region
+               FROM customers
+               WHERE email = ?;"""
+
+    cursor.execute(query, (email,))
+
+    row = cursor.fetchone()
+    
+    if not row:
+        return None
+
+    customer = Customer(row[0], row[1], row[2], row[3], row[4], row[5],
+                  row[6], row[7], row[8], row[9], row[10], row[11], row[12], row[13], row[14], row[15], row[16], row[17], row[18], row[19])
+    
+    return customer

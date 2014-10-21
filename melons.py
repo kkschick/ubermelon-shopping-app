@@ -24,7 +24,6 @@ def show_melon(id):
     """This page shows the details of a given melon, as well as giving an
     option to buy the melon."""
     melon = model.get_melon_by_id(id)
-    print melon
     return render_template("melon_details.html",
                   display_melon = melon)
 
@@ -44,9 +43,6 @@ def shopping_cart():
             dict_of_melons[melon.id][0] += 1
         else:
             dict_of_melons[melon.id] = [1, melon.common_name, melon.price]
-
-    print dict_of_melons
-
     
     return render_template("cart.html", display_cart = dict_of_melons, total = total_price)      
 
@@ -59,12 +55,10 @@ def add_to_cart(id):
     Intended behavior: when a melon is added to a cart, redirect them to the
     shopping cart page, while displaying the message
     "Successfully added to cart" """
-    cart = "cart"
-    if cart in session:
-        session[cart].append(id)
+    if "cart" in session:
+        session["cart"].append(id)
     else:
-        session[cart] = [id]
-    print session
+        session["cart"] = [id]
 
     flash("Successfully added to cart!")
     return redirect("/cart")
@@ -79,8 +73,34 @@ def show_login():
 def process_login():
     """TODO: Receive the user's login credentials located in the 'request.form'
     dictionary, look up the user, and store them in the session."""
-    return "Oops! This needs to be implemented"
+    email = request.form.get("email")
+    password = request.form.get("password")
+    customer = model.get_customer_by_email(email)
 
+    if customer:
+        flash("Welcome, %s %s" % (customer.givenname, customer.surname))
+        if "user" in session:
+            session["logged_in"] = True
+        else:
+            session["user"] = email
+            session["logged_in"] = True
+        return redirect("/melons")
+    else:
+        flash("That is an invalid login.")
+        session["logged_in"] = False
+        return render_template("login.html")
+
+
+ # error = None
+ #    if request.method == 'POST':
+ #        if valid_login(request.form['username'],
+ #                       request.form['password']):
+ #            return log_the_user_in(request.form['username'])
+ #        else:
+ #            error = 'Invalid username/password'
+ #    # the code below is executed if the request method
+ #    # was GET or the credentials were invalid
+ #    return render_template('login.html', error=error)
 
 @app.route("/checkout")
 def checkout():
