@@ -39,7 +39,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/home/user/src/UbermelonWebapp/env"
+VIRTUAL_ENV="/Users/kkschick/src/hb_exercises/UbermelonWebapp/env"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
