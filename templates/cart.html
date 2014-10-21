@@ -4,7 +4,7 @@
     <tr><th>Melon Name</th><th>Quantity</th><th>Price</th><th>Total</th></tr>
 
     {% for key, value in display_cart.iteritems() %}
-    <tr><td>{{value[1]}}</td><td>{{value[0]}}</td><td>${{ "%.2f" % value[2]}}</td><td>${{ "%.2f" % (value[0] * value[2])}}</td></tr>
+    <tr><td>{{value["name"]}}</td><td>{{value["qty"]}}</td><td>${{ "%.2f" % value["price"]}}</td><td>${{ "%.2f" % (value["qty"] * value["price"])}}</td></tr>
     {% endfor %}
 
 </table>

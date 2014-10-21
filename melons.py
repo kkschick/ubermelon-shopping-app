@@ -32,20 +32,24 @@ def shopping_cart():
     """TODO: Display the contents of the shopping cart. The shopping cart is a
     list held in the session that contains all the melons to be added. Check
     accompanying screenshots for details."""
-    items = session["cart"]
-    dict_of_melons = {}
+    if "cart" not in session:
+        flash("There is nothing in your cart.")
+        return render_template("cart.html", display_cart = {}, total = 0)
+    else:
+        items = session["cart"]
+        dict_of_melons = {}
 
-    total_price = 0
-    for item in items:
-        melon = model.get_melon_by_id(item)
-        total_price += melon.price
-        if melon.id in dict_of_melons:
-            dict_of_melons[melon.id][0] += 1
-        else:
-            dict_of_melons[melon.id] = [1, melon.common_name, melon.price]
+        total_price = 0
+        for item in items:
+            melon = model.get_melon_by_id(item)
+            total_price += melon.price
+            if melon.id in dict_of_melons:
+                dict_of_melons[melon.id]["qty"] += 1
+            else:
+                dict_of_melons[melon.id] = {"qty":1, "name": melon.common_name, "price":melon.price}
+        
+        return render_template("cart.html", display_cart = dict_of_melons, total = total_price)  
     
-    return render_template("cart.html", display_cart = dict_of_melons, total = total_price)      
-
 
 @app.route("/add_to_cart/<int:id>")
 def add_to_cart(id):
@@ -55,10 +59,11 @@ def add_to_cart(id):
     Intended behavior: when a melon is added to a cart, redirect them to the
     shopping cart page, while displaying the message
     "Successfully added to cart" """
-    if "cart" in session:
-        session["cart"].append(id)
-    else:
-        session["cart"] = [id]
+
+    if "cart" not in session:
+        session["cart"] = []
+
+    session["cart"].append(id)
 
     flash("Successfully added to cart!")
     return redirect("/cart")
