@@ -66,6 +66,7 @@ def add_to_cart(id):
 
 @app.route("/login", methods=["GET"])
 def show_login():
+    session["logged_in"] = False
     return render_template("login.html")
 
 
@@ -73,8 +74,9 @@ def show_login():
 def process_login():
     """TODO: Receive the user's login credentials located in the 'request.form'
     dictionary, look up the user, and store them in the session."""
+    session["logged_in"] = False
     email = request.form.get("email")
-    password = request.form.get("password")
+    # password = request.form.get("password")
     customer = model.get_customer_by_email(email)
 
     if customer:
@@ -90,17 +92,6 @@ def process_login():
         session["logged_in"] = False
         return render_template("login.html")
 
-
- # error = None
- #    if request.method == 'POST':
- #        if valid_login(request.form['username'],
- #                       request.form['password']):
- #            return log_the_user_in(request.form['username'])
- #        else:
- #            error = 'Invalid username/password'
- #    # the code below is executed if the request method
- #    # was GET or the credentials were invalid
- #    return render_template('login.html', error=error)
 
 @app.route("/checkout")
 def checkout():
